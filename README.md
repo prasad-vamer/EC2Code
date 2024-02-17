@@ -10,7 +10,7 @@ npm i aws-cdk
 cdk init app --language=typescript app
 ```
 
-remoe the git initialized in the app folder
+remove the git initialized in the app folder
 ```bash
 rm -rf .git
 rm -rf .gitignore
