@@ -1,0 +1,13 @@
+# ignorethe credential files and the build files
+/credentials/*
+workingnotes/*
+.DS_Store
+dist/
+build/
+.env
+
+app/node_modules
+
+# CDK asset staging directory
+app/.cdk.staging
+app/cdk.out
