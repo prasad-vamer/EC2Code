@@ -13,5 +13,5 @@ app/.cdk.staging
 app/cdk.out
 
 */*.pem
-
+tmp
 worknotes
