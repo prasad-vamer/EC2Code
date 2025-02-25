@@ -5,5 +5,6 @@ services:
     stdin_open: true
     volumes:
       - "./app:/usr/src/app"
+      - "./helper-scripts:/usr/src/helper-scripts"
     env_file:
       - .env
