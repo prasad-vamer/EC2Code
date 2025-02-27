@@ -1,76 +1,130 @@
-# CDK Development Environment
+# 🚀 AWS CDK - Developer EC2 Environment
 
-# Initialize a new CDK project
-<!-- THIS COMMAND is Not needed as it is done in the docker image itself; directly execute cdk init -->
-```bash
-npm i aws-cdk
+This repository provisions a **Developer Environment** on **AWS EC2** using **AWS CDK (TypeScript)**. 
+The setup includes a **VPC, Security Group, and an EC2 Instance**, ensuring a secure and scalable development environment.
+
+## **🌟 Features**
+- ✅ **EC2 Instance**: Preconfigured for development tasks, enabling a remote coding environment.
+- ✅ **VPC (Virtual Private Cloud)**: Isolated networking for enhanced security.
+- ✅ **Security Group**: Controlled inbound and outbound access to allow secure SSH and development tools.
+- ✅ **Scalability**: Supports heavy workloads for software builds, testing, and development.
+- ✅ **Infrastructure as Code**: Easily deploy, modify, and manage using AWS CDK.
+
+## **🚀 Upcoming Features**
+- ✨ **Resource Scheduling**: Start and stop the EC2 instance based on a  developer's schedule.
+- ✨ **Auto Scaling**: Automatically scale the EC2 instance based on the workload.
+- ✨ **Monitoring & Logging**: Implement CloudWatch for monitoring and logging.
+
+---
+
+## **💪🏼 Technologies**
+- **AWS CDK (TypeScript)**: Infrastructure as Code for provisioning AWS resources.
+- **AWS EC2**: Virtual server for development and deployment.
+- **AWS VPC**: Isolated networking environment for secure communication.
+- **AWS Security Group**: Firewall rules for controlling inbound and outbound traffic.
+- **Docker & Docker Compose**: Containerization for building and deploying the application.
+
+---
+
+## **📌 Prerequisites**
+Before deploying, ensure you have the following:
+- **AWS Account** with permissions to create EC2, VPC, and security groups.
+- **Docker and Docker Compose** (Latest version)- [Download](https://www.docker.com/products/docker-desktop/)
+
+---
+
+## **🛠️ Setup & Deployment**
+
+### **1️⃣ Clone the Repository**
+[![Clone Repo](https://img.shields.io/badge/Clone-Repository-blue?style=for-the-badge&logo=github)](https://github.com/prasad-vamer)
+
+```sh
+cd <TO_REPOSITORY_FOLDER>
 ```
 
-```bash
-cdk init app --language=typescript app
+### **2️⃣ Configure AWS Credentials in Environment Variables**
+```sh
+create a `.env` file as in the `.env_copy` file and fill in the necessary values.
 ```
 
-remove the git initialized in the app folder
-```bash
-rm -rf .git
-rm -rf .gitignore
+### **3️⃣ Build the Docker Image**
+```sh
+docker-compose build
 ```
 
-Bbootstrap the AWS environment that configured.
-this prepares the environment for CDK deployments.
-```bash
+### **4️⃣ Run the Docker Container**
+```sh
+docker compose run --rm app bash
+```
+
+### **5️⃣ Bootstrap CDK environment**
+- Initialize the CDK environment by bootstrapping the AWS environment.
+- Perform this step only if not done already.
+```sh
 cdk bootstrap
 ```
 
-# Deployment
+### **6️⃣ Deploy the CDK Stack**
+- Deploy the CDK stack to create the EC2 instance.
+```sh
+cdk deploy DevInstanceStage/*
+```
+- Deploynment will take some time, once the deployment is done, you will see the public IP of the ec2 instance in the output.
+- Direct deploymenet like this will create the ssh key pair and store it in the AWS System manager Parameter Store.
+- This key pair will be used to ssh into the ec2 instance.
 
-# Development
+#### ***📝 Note:***
 
-## UseFull Commands
-create an `.env` file as in the `.env_copy` file and fill in the necessary values.
+#### To retrieve the key pair from the parameter store, run the following command:
 
-cdk init app --language typescript
-cdk bootstrap
-cdk synth
-cdk deploy
-cdk diff
-<!-- List STacks -->
-cdk list
-cdk doctor
-cdk destroy <Stack Name>
-cdk destroy InfraStack
-cdk deploy --parameteres durationPara=3
+```sh
+bash ../helper-scripts/fetch-aws-parameter-store-key.sh /ec2/keypair/YOUR_KEY_PAIR_ID ../tmp/ACCESS_KEY.pem
+```
+- Store the key pair in a safe location and use it to ssh into the ec2 instance.
 
+#### If you already have a key pair, you can pass it's public key as a parameter in the file before deploying the stacks. 
+[app/lib/config/parameters.ts](app/lib/config/parameters.ts)
 
-<details>
-  <summary># Learning Notes</summary>
+  - replace the value of 'ec2KeyPairPublicKeypath' with the path to your public key.
+  - since the public key need to be accessible to the CDK running insde the docker container, you can place the public key in the `tmp` folder and pass the path toec2KeyPairPublicKeypath.
+  - eg: `ec2KeyPairPublicKeypath: '../tmp/your_public_key.pub'`
 
-  ## STACKS
-  Stack represents the unit of deployment in AWS CDK.
+### **7️⃣ SSH into the EC2 Instance**
+- Retrieve the public IP of the EC2 instance from the AWS Console or the ouput of the CDK deployment.
+- Retrieve the key pair from the parameter store using the command mentioned above.\
+- Use the key pair to ssh into the EC2 instance:
 
-  ## CDK CONSTRUCTS
-  CDK construct represents a cloud component which encapsulates everything cloud-formation needs to create the required AWS resources
-  3 types
+```sh
+ssh -i /path/to/your/ACCESS_KEY.pem USER-NAME@YOUR_EC2_PUBLIC_IP
+```
 
-  L1, L2 & L3
-  ===>===>====>
-  Level of encapsulation increases=> 
+- **USER-NAME** : The user name of the EC2 instance (default: `admin`).
+  - if weant to have  your own user name, you can pass it as a parameter in the file [app/lib/config/parameters.ts](app/lib/config/parameters.ts)
+  - replace the value of 'ec2InstanceUsername' with your desired user name.
+- **YOUR_EC2_PUBLIC_IP** : The public IP of the EC2 instance.
 
-  ## APP Constructs
-  App is a special construct that represents the entire CDK Application.
-  The App construct provides the root context
-  App can Contain one or more stack  whcih can contain one or more child constructs
-  App context is used to contruct, validate and synthesize the cdk constructs
+--- 
 
-  ## Why removing stack is not removing the resoucrs.
-  In AWS CDK, when you create resources using higher-level constructs like L2 and L3, the default behavior is that these resources are not automatically deleted when the stack is destroyed. This is because higher-level constructs often have additional safety measures and considerations in place to prevent accidental deletion of important resources.
-  When you destroy a stack, by default, only the resources directly defined in the stack (i.e., L1 constructs) are deleted. Resources created by higher-level constructs (L2 and L3) are not automatically deleted to avoid unintended data loss or disruption to other parts of your infrastructure.
+## **🔗 Useful Commands**
 
-</details>
+### **🔑 GENERATE SSH KEY PAIR**
+```sh
+ssh-keygen -t rsa -b 4096 -m PEM -f MyEc2Key.pem
+```
 
-# Continuous Support and Pathc Management
+#### **🔐 Secure the Key Pair**
+```sh
+chmod 400 MyEc2Key.pem
+```
 
-- Update AWS CDK and Dependencies
-```bash
-npm install aws-cdk-lib@latest constructs@latest
+### Get the public IP of the ec2 instances
+```sh
+aws ec2 describe-instances --query "Reservations[].Instances[].PublicIpAddress" 
+```
+
+### **🧹 Clean Up**
+- Delete the CDK stack to remove the EC2 instance.
+
+```sh
+cdk destroy DevInstanceStage/*
 ```
