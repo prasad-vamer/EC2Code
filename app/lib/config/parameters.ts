@@ -18,7 +18,7 @@ const AppParameters: Record<string, EnvironmentConfig> = {
     },
     // Service based separation for parameters
     devInstancServiceProps: {
-      ec2InstanceUsername: "prasad",
+      ec2InstanceUsername: "devInstanceAdmin",
       ec2KeyPairName: "devInstnaceAdmin",
       // ec2KeyPairPublicKeypath: "../tmp/MyEc2Key.pem.pub",
     },
