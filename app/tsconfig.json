@@ -21,7 +21,8 @@
     "baseUrl": ".",
     "paths": {
       "utils/*": ["lib/utils/*"],
-      "config/*": ["lib/config/*"]
+      "config/*": ["lib/config/*"],
+      "dev-instance-provider/*": ["lib/services/dev-instance-provider/*"]
     }
   },
   "exclude": ["node_modules", "cdk.out"]

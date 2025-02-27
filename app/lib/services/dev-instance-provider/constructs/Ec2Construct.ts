@@ -2,11 +2,11 @@ import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
 import * as iam from "aws-cdk-lib/aws-iam";
 import * as ec2 from "aws-cdk-lib/aws-ec2";
-import { CloudInit } from "../../../utils/cloud-init";
+import { CloudInit } from "utils/cloud-init";
 import {
   Ec2KeyPairConstruct,
   Ec2KeyPairConstructProps,
-} from "./Ec2KeyPairConstruct";
+} from "dev-instance-provider/constructs/Ec2KeyPairConstruct";
 
 export interface Ec2ConstructProps
   extends Ec2KeyPairConstructProps,

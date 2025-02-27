@@ -1,8 +1,8 @@
 import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
-import { DevInstancServiceProps } from "../../../config/parameters";
 import { DevInstanceNetworkStack } from "./dev-instance-network-stack";
 import { DevInstanceEc2Stack } from "./dev-instance-ec2-stack";
+import { DevInstancServiceProps } from "config/parameters";
 
 interface DevInstanceStageProps
   extends cdk.StageProps,
