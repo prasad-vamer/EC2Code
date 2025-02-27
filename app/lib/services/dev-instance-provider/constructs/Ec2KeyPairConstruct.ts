@@ -35,5 +35,10 @@ export class Ec2KeyPairConstruct extends Construct {
 
     // Ensure the key pair is removed on `cdk destroy`
     parameterStoreKeyPair.applyRemovalPolicy(cdk.RemovalPolicy.DESTROY);
+
+    // output the key pair id
+    new cdk.CfnOutput(this, "KeyPairId", {
+      value: parameterStoreKeyPair.attrKeyPairId,
+    });
   }
 }
