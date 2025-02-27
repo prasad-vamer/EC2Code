@@ -36,9 +36,9 @@ export class SecurityConstruct extends Construct {
       this.securityGroup.node.defaultChild as cdk.CfnResource
     ).applyRemovalPolicy(cdk.RemovalPolicy.DESTROY);
 
-    // ✅ Output Security Group ID
-    new cdk.CfnOutput(this, "SecurityGroupId", {
-      value: this.securityGroup.securityGroupId,
-    });
+    // // ✅ Output Security Group ID
+    // new cdk.CfnOutput(this, "SecurityGroupId", {
+    //   value: this.securityGroup.securityGroupId,
+    // });
   }
 }
