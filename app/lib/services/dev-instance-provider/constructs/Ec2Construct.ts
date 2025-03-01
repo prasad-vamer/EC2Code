@@ -22,7 +22,7 @@ export class Ec2Construct extends Construct {
 
     // Lookup the latest Debian AMI
     const debianAmi = new ec2.LookupMachineImage({
-      name: "debian-*-amd64-*", // Pattern for Debian AMIs
+      name: "debian-*-arm64-*", // Pattern for Debian AMIs
       owners: ["136693071363"], // Debian AMI owner ID (official AWS)
     });
 
@@ -42,22 +42,32 @@ export class Ec2Construct extends Construct {
       keyPairPublicKeypath: props.keyPairPublicKeypath,
     });
 
+    // Create user data script
+    const userData = CloudInit.createUserData({
+      userName: props.ec2InstanceUsername,
+    });
+
     // Create EC2 Instance
     const ec2Instance = new ec2.Instance(this, "DebianInstance", {
       vpc: props.vpc,
       securityGroup: props.securityGroup,
-      instanceType: ec2.InstanceType.of(
-        ec2.InstanceClass.T3,
-        ec2.InstanceSize.MICRO
-      ),
       machineImage: debianAmi,
+      instanceType: ec2.InstanceType.of(
+        ec2.InstanceClass.R8G,
+        ec2.InstanceSize.MEDIUM
+      ),
       keyPair: keyPairConstruct.keyPair,
       role: ec2Role,
+      userData,
     });
 
-    // ✅ create a new user using CloudInit if ec2InstanceUsername is provided as parameter
-    if (props.ec2InstanceUsername)
-      ec2Instance.addUserData(CloudInit.addUser(props.ec2InstanceUsername));
+    // Add tags to the EC2 instance
+    cdk.Tags.of(ec2Instance).add(
+      "Name",
+      `Developer Instance ${
+        props.ec2InstanceUsername ? `of ${props.ec2InstanceUsername}` : ""
+      }`
+    );
 
     // ✅ Ensure EC2 instance is removed on `cdk destroy`
     (ec2Instance.node.defaultChild as cdk.CfnResource).applyRemovalPolicy(
