@@ -29,6 +29,7 @@ export class DevInstanceStage extends cdk.Stage {
       keyPairName: props.ec2KeyPairName,
       keyPairPublicKeypath: props.ec2KeyPairPublicKeypath,
       ec2InstanceUsername: props.ec2InstanceUsername,
+      ec2InstanceType: props.ec2InstanceType,
     });
   }
 }

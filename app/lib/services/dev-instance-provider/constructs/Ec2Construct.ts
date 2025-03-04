@@ -14,6 +14,7 @@ export interface Ec2ConstructProps
   vpc: ec2.Vpc;
   securityGroup: ec2.SecurityGroup;
   ec2InstanceUsername?: string;
+  ec2InstanceType: ec2.InstanceType;
 }
 
 export class Ec2Construct extends Construct {
@@ -52,10 +53,7 @@ export class Ec2Construct extends Construct {
       vpc: props.vpc,
       securityGroup: props.securityGroup,
       machineImage: debianAmi,
-      instanceType: ec2.InstanceType.of(
-        ec2.InstanceClass.R8G,
-        ec2.InstanceSize.MEDIUM
-      ),
+      instanceType: props.ec2InstanceType,
       keyPair: keyPairConstruct.keyPair,
       role: ec2Role,
       userData,

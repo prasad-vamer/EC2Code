@@ -20,6 +20,7 @@ export class DevInstanceEc2Stack extends cdk.Stack {
       keyPairName: props.keyPairName,
       keyPairPublicKeypath: props.keyPairPublicKeypath,
       ec2InstanceUsername: props.ec2InstanceUsername,
+      ec2InstanceType: props.ec2InstanceType,
     });
   }
 }
