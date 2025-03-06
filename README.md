@@ -14,6 +14,7 @@ The setup includes a **VPC, Security Group, and an EC2 Instance**, ensuring a se
 - ✨ **Resource Scheduling**: Start and stop the EC2 instance based on a  developer's schedule.
 - ✨ **Auto Scaling**: Automatically scale the EC2 instance based on the workload.
 - ✨ **Monitoring & Logging**: Implement CloudWatch for monitoring and logging.
+- ✨ **Cost Display**: Present the usage statistics along with the estimated bill amount and duration.
 
 ---
 
