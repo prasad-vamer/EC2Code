@@ -40,8 +40,3 @@ export interface DevInstanceEc2StackProps
 export interface DevInstanceStageProps
   extends SingleEc2InstanceProps,
     cdk.StageProps {}
-
-export interface EnvironmentConfig {
-  env: Environment;
-  devInstancServiceProps: SingleEc2InstanceProps;
-}

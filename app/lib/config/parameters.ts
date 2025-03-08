@@ -1,5 +1,11 @@
 import * as ec2 from "aws-cdk-lib/aws-ec2";
-import { EnvironmentConfig } from "lib/types";
+import { Environment } from "aws-cdk-lib";
+import { SingleEc2InstanceProps } from "lib/types";
+
+export interface EnvironmentConfig {
+  env: Environment;
+  devInstancServiceProps: SingleEc2InstanceProps;
+}
 
 const AppParameters: Record<string, EnvironmentConfig> = {
   test: {
