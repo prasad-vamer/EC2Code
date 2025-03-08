@@ -3,19 +3,8 @@ import { Construct } from "constructs";
 import * as iam from "aws-cdk-lib/aws-iam";
 import * as ec2 from "aws-cdk-lib/aws-ec2";
 import { CloudInit } from "utils/cloud-init";
-import {
-  Ec2KeyPairConstruct,
-  Ec2KeyPairConstructProps,
-} from "dev-instance-provider/constructs/Ec2KeyPairConstruct";
-
-export interface Ec2ConstructProps
-  extends Ec2KeyPairConstructProps,
-    cdk.StackProps {
-  vpc: ec2.Vpc;
-  securityGroup: ec2.SecurityGroup;
-  ec2InstanceUsername?: string;
-  ec2InstanceType: ec2.InstanceType;
-}
+import { Ec2KeyPairConstruct } from "dev-instance-provider/constructs/Ec2KeyPairConstruct";
+import { Ec2ConstructProps } from "lib/types";
 
 export class Ec2Construct extends Construct {
   constructor(scope: Construct, id: string, props: Ec2ConstructProps) {

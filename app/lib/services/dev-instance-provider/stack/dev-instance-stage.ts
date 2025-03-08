@@ -2,11 +2,7 @@ import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
 import { DevInstanceNetworkStack } from "./dev-instance-network-stack";
 import { DevInstanceEc2Stack } from "./dev-instance-ec2-stack";
-import { DevInstancServiceProps } from "config/parameters";
-
-interface DevInstanceStageProps
-  extends cdk.StageProps,
-    DevInstancServiceProps {}
+import { DevInstanceStageProps } from "lib/types";
 
 export class DevInstanceStage extends cdk.Stage {
   constructor(scope: Construct, id: string, props: DevInstanceStageProps) {
@@ -25,9 +21,8 @@ export class DevInstanceStage extends cdk.Stage {
     new DevInstanceEc2Stack(this, "DevInstanceEC2Stack", {
       env: props.env,
       vpc: networking.vpc,
-      securityGroup: networking.securityGroup,
-      keyPairName: props.ec2KeyPairName,
-      keyPairPublicKeypath: props.ec2KeyPairPublicKeypath,
+      keyPairName: props.keyPairName,
+      keyPairPublicKeypath: props.keyPairPublicKeypath,
       ec2InstanceUsername: props.ec2InstanceUsername,
       ec2InstanceType: props.ec2InstanceType,
     });

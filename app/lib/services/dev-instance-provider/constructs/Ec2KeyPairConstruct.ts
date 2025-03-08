@@ -2,11 +2,7 @@ import * as fs from "fs";
 import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
 import * as ec2 from "aws-cdk-lib/aws-ec2";
-
-export interface Ec2KeyPairConstructProps {
-  keyPairName: string; // Key Pair Name passed as a property
-  keyPairPublicKeypath?: string; // Path to the public key file
-}
+import { Ec2KeyPairConstructProps } from "lib/types";
 
 export class Ec2KeyPairConstruct extends Construct {
   public readonly keyPair: ec2.IKeyPair;

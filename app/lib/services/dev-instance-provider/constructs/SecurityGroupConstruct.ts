@@ -1,10 +1,7 @@
 import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
 import * as ec2 from "aws-cdk-lib/aws-ec2";
-
-interface SecurityGroupConstructProps {
-  vpc: ec2.Vpc;
-}
+import { SecurityGroupConstructProps } from "lib/types";
 
 export class SecurityGroupConstruct extends Construct {
   public readonly securityGroup: ec2.SecurityGroup;
@@ -39,10 +36,5 @@ export class SecurityGroupConstruct extends Construct {
     (
       this.securityGroup.node.defaultChild as cdk.CfnResource
     ).applyRemovalPolicy(cdk.RemovalPolicy.DESTROY);
-
-    // // ✅ Output Security Group ID
-    // new cdk.CfnOutput(this, "SecurityGroupId", {
-    //   value: this.securityGroup.securityGroupId,
-    // });
   }
 }
