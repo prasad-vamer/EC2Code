@@ -6,6 +6,7 @@ export interface EnvironmentConfig {
   env: Environment;
   devInstanceServiceProps: {
     ec2Instances: SingleEc2InstanceProps[];
+    whitelistIps?: string[];
   };
 }
 
@@ -33,6 +34,7 @@ const AppParameters: Record<string, EnvironmentConfig> = {
           ],
         },
       ],
+      whitelistIps: [],
     },
   },
   dev: {
@@ -57,6 +59,7 @@ const AppParameters: Record<string, EnvironmentConfig> = {
           ],
         },
       ],
+      whitelistIps: [], // empty whitelist, no NetworkACl will be created
     },
   },
 };

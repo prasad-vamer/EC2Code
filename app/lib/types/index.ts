@@ -1,6 +1,7 @@
 import * as cdk from "aws-cdk-lib";
 import * as ec2 from "aws-cdk-lib/aws-ec2";
 import { Environment } from "aws-cdk-lib";
+import { EnvironmentConfig } from "config/parameters";
 
 export interface Ec2KeyPairConstructProps {
   keyPairName: string; // Key Pair Name passed as a property
@@ -35,6 +36,11 @@ export interface DevInstanceEc2StackProps extends cdk.StackProps {
   ec2Instances: SingleEc2InstanceProps[];
 }
 
-export interface DevInstanceStageProps extends cdk.StageProps {
-  ec2Instances: SingleEc2InstanceProps[];
+export interface DevInstanceNetworkStackProps extends cdk.StackProps {
+  whitelistIps?: string[];
 }
+
+type DevInstanceServiceProps = EnvironmentConfig["devInstanceServiceProps"];
+export interface DevInstanceStageProps
+  extends cdk.StageProps,
+    DevInstanceServiceProps {}
