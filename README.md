@@ -34,7 +34,88 @@ Before deploying, ensure you have the following:
 
 ---
 
-## **🛠️ Setup & Deployment**
+## **🛠️ Configuration: Understanding `parameters.ts`**
+
+The `parameters.ts` file defines the environment configuration for deploying EC2 instances. It includes two primary modes:
+
+### **1️⃣ Test Mode (`test`)**
+- Used for testing and developing new features in AWS CDK.
+- Deploys a minimal EC2 instance to **reduce costs** while still allowing feature validation.
+
+### **2️⃣ Development Mode (`dev`)**
+- Deploys the **actual EC2 instance** used for software development.
+- Ensures a full-fledged development environment for engineers.
+
+### **🔹 Environment Configuration (`env`)**
+```ts
+env: {
+  account: process.env.AWS_ACCOUNT_ID,
+  region: process.env.AWS_DEFAULT_REGION,
+}
+```
+- Defines the **AWS Account ID** and **Region** where the resources will be deployed.
+- Helps avoid **cross-stack reference errors** in AWS CDK.
+
+### **🔹 `devInstancServiceProps`: EC2 Instance Configuration**
+- An **array of objects**, where each object defines an EC2 instance's parameters.
+- If you need **10 EC2 instances for 10 developers**, you simply add **10 objects** to this array.
+
+### **🔊 Key Parameters in `parameters.ts`**
+
+#### **1️⃣ `keyPairName`**
+- Specifies the **name of the SSH Key Pair** that will be associated with the EC2 instance.
+- Can be found in **AWS Console → EC2 → Key Pairs**.
+
+#### **2️⃣ `keyPairPublicKeypath`** (Optional)
+- Specifies the **path** to an **existing SSH public key**.
+- If provided, **CDK will not generate a new key pair**, instead, it will use the provided public key.
+- If not provided, **CDK automatically creates a key pair** and stores it in **AWS Systems Manager Parameter Store**.
+
+📞 **Reference**: [AWS CDK Key Pair Documentation](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_ec2.CfnKeyPair.html)
+
+#### **3️⃣ `ec2InstanceUsername`** (Optional)
+- Defines the **user account** inside the EC2 instance.
+- By default, Debian-based EC2 instances use **`admin`**.
+- If a custom username is provided, it will be created within the EC2 instance.
+- This username is used for SSH login.
+
+#### **4️⃣ `ec2InstanceType`**
+- Specifies the **EC2 instance type** for development.
+- Choose an instance type based on your workload and budget.
+
+📞 **Reference**: [AWS EC2 Instance Types](https://aws.amazon.com/ec2/instance-types/)
+
+#### **5️⃣ `ingressRules`** (Security Group Rules)
+- Defines **inbound traffic rules** for the EC2 instance's Security Group.
+- Each rule consists of:
+  - **`port`**: The port number to allow traffic (e.g., SSH, HTTP).
+  - **`source`**: Defines where the traffic is allowed from.
+
+##### **Example: Security Rules for a React Developer**
+```ts
+[
+  { port: 22, source: ec2.Peer.anyIpv4() },  // SSH access from anywhere
+  { port: 5173, source: ec2.Peer.anyIpv4() }, // Vite React app
+  { port: 3000, source: ec2.Peer.anyIpv4() }, // Backend service
+  { port: 8080, source: ec2.Peer.anyIpv4() }, // Database viewer
+]
+```
+- Ensures that developers can SSH into the instance and run their applications.
+
+---
+
+### **🫧 Summary**
+- **Test Mode (`test`)**: Cost-efficient EC2 for AWS CDK feature testing.
+- **Dev Mode (`dev`)**: Full-scale EC2 for software development.
+- **Flexible EC2 Configuration**: Supports multiple EC2 instances with customizable parameters.
+- **Automated Key Management**: Uses either an existing key pair or generates one via AWS Systems Manager.
+- **Secure Access Rules**: Defines controlled inbound access via **Security Groups**.
+
+This structured parameterization allows teams to **dynamically provision development environments** in AWS with minimal manual effort. 🚀
+
+---
+
+## **⚙️ Setup & Deployment**
 
 ### **1️⃣ Clone the Repository**
 [![Clone Repo](https://img.shields.io/badge/Clone-Repository-blue?style=for-the-badge&logo=github)](https://github.com/prasad-vamer)
