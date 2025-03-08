@@ -9,20 +9,30 @@ export class DevInstanceEc2Stack extends cdk.Stack {
   constructor(scope: Construct, id: string, props: DevInstanceEc2StackProps) {
     super(scope, id, props);
 
-    // ✅ Deploy Security Group
-    const sGConstruct = new SecurityGroupConstruct(this, "SecurityStack", {
-      vpc: props.vpc,
-      ingressRules: props.ingressRules,
-    });
+    props.ec2Instaces.forEach((ec2Instance, index) => {
+      // ✅ Deploy Security Group
+      const sGConstruct = new SecurityGroupConstruct(
+        this,
+        `SecurityStack${ec2Instance.ec2InstanceUsername || index}`,
+        {
+          vpc: props.vpc,
+          ingressRules: ec2Instance.ingressRules,
+        }
+      );
 
-    // ✅ Deploy EC2 Instance
-    new Ec2Construct(this, "Ec2Construct", {
-      vpc: props.vpc,
-      securityGroup: sGConstruct.securityGroup,
-      keyPairName: props.keyPairName,
-      keyPairPublicKeypath: props.keyPairPublicKeypath,
-      ec2InstanceUsername: props.ec2InstanceUsername,
-      ec2InstanceType: props.ec2InstanceType,
+      // ✅ Deploy EC2 Instance
+      new Ec2Construct(
+        this,
+        `Ec2Construct${ec2Instance.ec2InstanceUsername || index}`,
+        {
+          vpc: props.vpc,
+          securityGroup: sGConstruct.securityGroup,
+          keyPairName: ec2Instance.keyPairName,
+          keyPairPublicKeypath: ec2Instance.keyPairPublicKeypath,
+          ec2InstanceUsername: ec2Instance.ec2InstanceUsername,
+          ec2InstanceType: ec2Instance.ec2InstanceType,
+        }
+      );
     });
   }
 }

@@ -30,13 +30,11 @@ export interface Ec2ConstructProps extends Ec2BaseProps {
   vpc: ec2.Vpc;
 }
 
-export interface DevInstanceEc2StackProps
-  extends cdk.StackProps,
-    SingleEc2InstanceProps,
-    SecurityGroupConstructProps {
-  env?: Environment;
+export interface DevInstanceEc2StackProps extends cdk.StackProps {
+  vpc: ec2.Vpc;
+  ec2Instaces: SingleEc2InstanceProps[];
 }
 
-export interface DevInstanceStageProps
-  extends SingleEc2InstanceProps,
-    cdk.StageProps {}
+export interface DevInstanceStageProps extends cdk.StageProps {
+  ec2Instaces: SingleEc2InstanceProps[];
+}

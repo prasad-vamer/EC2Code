@@ -4,7 +4,7 @@ import { SingleEc2InstanceProps } from "lib/types";
 
 export interface EnvironmentConfig {
   env: Environment;
-  devInstancServiceProps: SingleEc2InstanceProps;
+  devInstancServiceProps: SingleEc2InstanceProps[];
 }
 
 const AppParameters: Record<string, EnvironmentConfig> = {
@@ -15,18 +15,21 @@ const AppParameters: Record<string, EnvironmentConfig> = {
       region: process.env.AWS_DEFAULT_REGION,
     },
     // Service based separation for parameters
-    devInstancServiceProps: {
-      keyPairName: "testInstnaceAdmin",
-      keyPairPublicKeypath: "../tmp/MyEc2Key.pem.pub",
-      ec2InstanceUsername: "testInstanceAdmin",
-      ec2InstanceType: ec2.InstanceType.of(
-        ec2.InstanceClass.T4G,
-        ec2.InstanceSize.SMALL
-      ),
-      ingressRules: [
-        { port: 22, source: ec2.Peer.anyIpv4() }, // allow ssh from anywhere
-      ],
-    },
+    devInstancServiceProps: [
+      {
+        keyPairName: "testInstnaceAdmin",
+        keyPairPublicKeypath: "../tmp/MyEc2Key.pem.pub",
+        ec2InstanceUsername: "testInstanceAdmin",
+        ec2InstanceType: ec2.InstanceType.of(
+          ec2.InstanceClass.T4G,
+          ec2.InstanceSize.SMALL
+        ),
+        ingressRules: [
+          { port: 22, source: ec2.Peer.anyIpv4() }, // allow ssh from anywhere
+          { port: 5173, source: ec2.Peer.anyIpv4() }, // post or vite react app
+        ],
+      },
+    ],
   },
   dev: {
     // Stack environment (account and region) for the CDK app
@@ -35,18 +38,20 @@ const AppParameters: Record<string, EnvironmentConfig> = {
       region: process.env.AWS_DEFAULT_REGION,
     },
     // Service based separation for parameters
-    devInstancServiceProps: {
-      keyPairName: "devInstnaceAdmin",
-      keyPairPublicKeypath: "../tmp/MyEc2Key.pem.pub",
-      ec2InstanceUsername: "devInstanceAdmin",
-      ec2InstanceType: ec2.InstanceType.of(
-        ec2.InstanceClass.R8G,
-        ec2.InstanceSize.MEDIUM
-      ),
-      ingressRules: [
-        { port: 22, source: ec2.Peer.anyIpv4() }, // allow ssh from anywhere
-      ],
-    },
+    devInstancServiceProps: [
+      {
+        keyPairName: "devInstnaceAdmin",
+        keyPairPublicKeypath: "../tmp/MyEc2Key.pem.pub",
+        ec2InstanceUsername: "devInstanceAdmin",
+        ec2InstanceType: ec2.InstanceType.of(
+          ec2.InstanceClass.R8G,
+          ec2.InstanceSize.MEDIUM
+        ),
+        ingressRules: [
+          { port: 22, source: ec2.Peer.anyIpv4() }, // allow ssh from anywhere
+        ],
+      },
+    ],
   },
 };
 
