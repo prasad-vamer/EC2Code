@@ -15,7 +15,7 @@ const AppParameters: Record<string, EnvironmentConfig> = {
       ec2InstanceUsername: "testInstanceAdmin",
       ec2InstanceType: ec2.InstanceType.of(
         ec2.InstanceClass.T4G,
-        ec2.InstanceSize.NANO
+        ec2.InstanceSize.SMALL
       ),
       ingressRules: [
         { port: 22, source: ec2.Peer.anyIpv4() }, // allow ssh from anywhere
