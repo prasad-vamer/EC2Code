@@ -18,8 +18,7 @@ const AppParameters: Record<string, EnvironmentConfig> = {
         ec2.InstanceSize.NANO
       ),
       ingressRules: [
-        { port: 22, source: ec2.Peer.anyIpv4() },
-        { port: 443, source: ec2.Peer.anyIpv4() },
+        { port: 22, source: ec2.Peer.anyIpv4() }, // allow ssh from anywhere
       ],
     },
   },
@@ -38,7 +37,9 @@ const AppParameters: Record<string, EnvironmentConfig> = {
         ec2.InstanceClass.R8G,
         ec2.InstanceSize.MEDIUM
       ),
-      ingressRules: [],
+      ingressRules: [
+        { port: 22, source: ec2.Peer.anyIpv4() }, // allow ssh from anywhere
+      ],
     },
   },
 };
