@@ -2,14 +2,18 @@ import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
 import * as ec2 from "aws-cdk-lib/aws-ec2";
 
-interface SecurityConstructProps {
+interface SecurityGroupConstructProps {
   vpc: ec2.Vpc;
 }
 
-export class SecurityConstruct extends Construct {
+export class SecurityGroupConstruct extends Construct {
   public readonly securityGroup: ec2.SecurityGroup;
 
-  constructor(scope: Construct, id: string, props: SecurityConstructProps) {
+  constructor(
+    scope: Construct,
+    id: string,
+    props: SecurityGroupConstructProps
+  ) {
     super(scope, id);
 
     // ✅ Create a Security Group

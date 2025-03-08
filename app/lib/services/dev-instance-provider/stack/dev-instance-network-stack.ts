@@ -2,7 +2,7 @@ import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
 import * as ec2 from "aws-cdk-lib/aws-ec2";
 import { VpcConstruct } from "dev-instance-provider/constructs/VpcConstruct";
-import { SecurityConstruct } from "dev-instance-provider//constructs/SecurityConstruct";
+import { SecurityGroupConstruct } from "dev-instance-provider/constructs/SecurityGroupConstruct";
 
 export class DevInstanceNetworkStack extends cdk.Stack {
   public readonly vpc: ec2.Vpc;
@@ -15,7 +15,7 @@ export class DevInstanceNetworkStack extends cdk.Stack {
     const vpcStack = new VpcConstruct(this, "VpcStack");
 
     // ✅ Deploy Security Group
-    const securityStack = new SecurityConstruct(this, "SecurityStack", {
+    const securityStack = new SecurityGroupConstruct(this, "SecurityStack", {
       vpc: vpcStack.vpc,
     });
 
