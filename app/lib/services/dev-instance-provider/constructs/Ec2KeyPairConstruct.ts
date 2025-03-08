@@ -11,8 +11,8 @@ export class Ec2KeyPairConstruct extends Construct {
     super(scope, id);
 
     // Read the public key from the provided file path
-    const publicKey = props.keyPairPublicKeypath
-      ? fs.readFileSync(props.keyPairPublicKeypath, "utf8")
+    const publicKey = props.keyPairPublicKeyPath
+      ? fs.readFileSync(props.keyPairPublicKeyPath, "utf8")
       : undefined;
 
     // import key pair to EC2 key pair or create new key pair in system manager parameter store

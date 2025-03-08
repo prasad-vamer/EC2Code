@@ -4,7 +4,7 @@ This repository provisions a **Developer Environment** on **AWS EC2** using **AW
 The setup includes a **VPC, Security Group, and an EC2 Instance**, ensuring a secure and scalable development environment.
 
 ## **🌟 Features**
-- ✅ **EC2 Instance**: Preconfigured for development tasks, enabling a remote coding environment.
+- ✅ **EC2 Instance**: Pre-configured for development tasks, enabling a remote coding environment.
 - ✅ **VPC (Virtual Private Cloud)**: Isolated networking for enhanced security.
 - ✅ **Security Group**: Controlled inbound and outbound access to allow secure SSH and development tools.
 - ✅ **Scalability**: Supports heavy workloads for software builds, testing, and development.
@@ -67,7 +67,7 @@ env: {
 - Specifies the **name of the SSH Key Pair** that will be associated with the EC2 instance.
 - Can be found in **AWS Console → EC2 → Key Pairs**.
 
-#### **2️⃣ `keyPairPublicKeypath`** (Optional)
+#### **2️⃣ `keyPairPublicKeyPath`** (Optional)
 - Specifies the **path** to an **existing SSH public key**.
 - If provided, **CDK will not generate a new key pair**, instead, it will use the provided public key.
 - If not provided, **CDK automatically creates a key pair** and stores it in **AWS Systems Manager Parameter Store**.
@@ -152,8 +152,8 @@ cdk bootstrap
 ```sh
 cdk deploy DevInstanceStage/*
 ```
-- Deploynment will take some time, once the deployment is done, you will see the public IP of the ec2 instance in the output.
-- Direct deploymenet like this will create the ssh key pair and store it in the AWS System manager Parameter Store.
+- Deployment will take some time, once the deployment is done, you will see the public IP of the ec2 instance in the output.
+- Direct deployment like this will create the ssh key pair and store it in the AWS System manager Parameter Store.
 - This key pair will be used to ssh into the ec2 instance.
 
 #### ***📝 Note:***
@@ -168,12 +168,12 @@ bash ../helper-scripts/fetch-aws-parameter-store-key.sh /ec2/keypair/YOUR_KEY_PA
 #### If you already have a key pair, you can pass it's public key as a parameter in the file before deploying the stacks. 
 [app/lib/config/parameters.ts](app/lib/config/parameters.ts)
 
-  - replace the value of 'ec2KeyPairPublicKeypath' with the path to your public key.
-  - since the public key need to be accessible to the CDK running insde the docker container, you can place the public key in the `tmp` folder and pass the path toec2KeyPairPublicKeypath.
-  - eg: `ec2KeyPairPublicKeypath: '../tmp/your_public_key.pub'`
+  - replace the value of 'keyPairPublicKeyPath' with the path to your public key.
+  - since the public key need to be accessible to the CDK running inside the docker container, you can place the public key in the `tmp` folder and pass the path to keyPairPublicKeyPath.
+  - eg: `keyPairPublicKeyPath: '../tmp/your_public_key.pub'`
 
 ### **7️⃣ SSH into the EC2 Instance**
-- Retrieve the public IP of the EC2 instance from the AWS Console or the ouput of the CDK deployment.
+- Retrieve the public IP of the EC2 instance from the AWS Console or the output of the CDK deployment.
 - Retrieve the key pair from the parameter store using the command mentioned above.\
 - Use the key pair to ssh into the EC2 instance:
 
@@ -182,7 +182,7 @@ ssh -i /path/to/your/ACCESS_KEY.pem USER-NAME@YOUR_EC2_PUBLIC_IP
 ```
 
 - **USER-NAME** : The user name of the EC2 instance (default: `admin`).
-  - if weant to have  your own user name, you can pass it as a parameter in the file [app/lib/config/parameters.ts](app/lib/config/parameters.ts)
+  - if you want to have  your own user name, you can pass it as a parameter in the file [app/lib/config/parameters.ts](app/lib/config/parameters.ts)
   - replace the value of 'ec2InstanceUsername' with your desired user name.
 - **YOUR_EC2_PUBLIC_IP** : The public IP of the EC2 instance.
 

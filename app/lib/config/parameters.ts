@@ -21,7 +21,7 @@ const AppParameters: Record<string, EnvironmentConfig> = {
       ec2Instances: [
         {
           keyPairName: "testInstanceAdmin",
-          keyPairPublicKeypath: "../tmp/MyEc2Key.pem.pub",
+          keyPairPublicKeyPath: "../tmp/MyEc2Key.pem.pub",
           ec2InstanceUsername: "testInstanceAdmin",
           ec2InstanceType: ec2.InstanceType.of(
             ec2.InstanceClass.T4G,
@@ -46,7 +46,7 @@ const AppParameters: Record<string, EnvironmentConfig> = {
       ec2Instances: [
         {
           keyPairName: "devInstanceAdmin",
-          keyPairPublicKeypath: "../tmp/MyEc2Key.pem.pub",
+          keyPairPublicKeyPath: "../tmp/MyEc2Key.pem.pub",
           ec2InstanceUsername: "devInstanceAdmin",
           ec2InstanceType: ec2.InstanceType.of(
             ec2.InstanceClass.R8G,

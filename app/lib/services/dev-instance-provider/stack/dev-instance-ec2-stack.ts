@@ -28,7 +28,7 @@ export class DevInstanceEc2Stack extends cdk.Stack {
           vpc: props.vpc,
           securityGroup: sGConstruct.securityGroup,
           keyPairName: ec2Instance.keyPairName,
-          keyPairPublicKeypath: ec2Instance.keyPairPublicKeypath,
+          keyPairPublicKeyPath: ec2Instance.keyPairPublicKeyPath,
           ec2InstanceUsername: ec2Instance.ec2InstanceUsername,
           ec2InstanceType: ec2Instance.ec2InstanceType,
         }

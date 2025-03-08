@@ -29,7 +29,7 @@ export class Ec2Construct extends Construct {
     // Key Pair for EC2 Instance generation / import the existing key pair
     const keyPairConstruct = new Ec2KeyPairConstruct(this, "KeyPair", {
       keyPairName: props.keyPairName,
-      keyPairPublicKeypath: props.keyPairPublicKeypath,
+      keyPairPublicKeyPath: props.keyPairPublicKeyPath,
     });
 
     // Create user data script

@@ -4,7 +4,7 @@ import { Environment } from "aws-cdk-lib";
 
 export interface Ec2KeyPairConstructProps {
   keyPairName: string; // Key Pair Name passed as a property
-  keyPairPublicKeypath?: string; // Path to the public key file
+  keyPairPublicKeyPath?: string; // Path to the public key file
 }
 export interface IngressRule {
   port: number;
