@@ -38,7 +38,7 @@ export class Ec2KeyPairConstruct extends Construct {
 
     // output the key pair id
     new cdk.CfnOutput(this, "KeyPairId", {
-      value: parameterStoreKeyPair.attrKeyPairId,
+      value: `/ec2/keypair/${parameterStoreKeyPair.attrKeyPairId}`,
     });
   }
 }
