@@ -1,5 +1,5 @@
 {
-  "name": "app",
+  "name": "ec2code",
   "version": "0.1.0",
   "bin": {
     "app": "bin/app.js"
