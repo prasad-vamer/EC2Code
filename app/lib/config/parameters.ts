@@ -4,7 +4,7 @@ import { SingleEc2InstanceProps } from "lib/types";
 
 export interface EnvironmentConfig {
   env: Environment;
-  devInstancServiceProps: SingleEc2InstanceProps[];
+  devInstanceServiceProps: SingleEc2InstanceProps[];
 }
 
 const AppParameters: Record<string, EnvironmentConfig> = {
@@ -15,9 +15,9 @@ const AppParameters: Record<string, EnvironmentConfig> = {
       region: process.env.AWS_DEFAULT_REGION,
     },
     // Service based separation for parameters
-    devInstancServiceProps: [
+    devInstanceServiceProps: [
       {
-        keyPairName: "testInstnaceAdmin",
+        keyPairName: "testInstanceAdmin",
         keyPairPublicKeypath: "../tmp/MyEc2Key.pem.pub",
         ec2InstanceUsername: "testInstanceAdmin",
         ec2InstanceType: ec2.InstanceType.of(
@@ -38,9 +38,9 @@ const AppParameters: Record<string, EnvironmentConfig> = {
       region: process.env.AWS_DEFAULT_REGION,
     },
     // Service based separation for parameters
-    devInstancServiceProps: [
+    devInstanceServiceProps: [
       {
-        keyPairName: "devInstnaceAdmin",
+        keyPairName: "devInstanceAdmin",
         keyPairPublicKeypath: "../tmp/MyEc2Key.pem.pub",
         ec2InstanceUsername: "devInstanceAdmin",
         ec2InstanceType: ec2.InstanceType.of(

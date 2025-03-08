@@ -11,14 +11,14 @@ export class Ec2KeyPairConstruct extends Construct {
     super(scope, id);
 
     // Read the public key from the provided file path
-    const publickKey = props.keyPairPublicKeypath
+    const publicKey = props.keyPairPublicKeypath
       ? fs.readFileSync(props.keyPairPublicKeypath, "utf8")
       : undefined;
 
     // import key pair to EC2 key pair or create new key pair in system manager parameter store
     const parameterStoreKeyPair = new ec2.CfnKeyPair(this, "ImportedKeyPair", {
       keyName: props.keyPairName,
-      publicKeyMaterial: publickKey,
+      publicKeyMaterial: publicKey,
     });
 
     // Since CfnKeyPair only creates a key pair but cannot be used in EC2,

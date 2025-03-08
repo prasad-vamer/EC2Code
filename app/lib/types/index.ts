@@ -32,9 +32,9 @@ export interface Ec2ConstructProps extends Ec2BaseProps {
 
 export interface DevInstanceEc2StackProps extends cdk.StackProps {
   vpc: ec2.Vpc;
-  ec2Instaces: SingleEc2InstanceProps[];
+  ec2Instances: SingleEc2InstanceProps[];
 }
 
 export interface DevInstanceStageProps extends cdk.StageProps {
-  ec2Instaces: SingleEc2InstanceProps[];
+  ec2Instances: SingleEc2InstanceProps[];
 }

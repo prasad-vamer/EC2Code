@@ -56,7 +56,7 @@ env: {
 - Defines the **AWS Account ID** and **Region** where the resources will be deployed.
 - Helps avoid **cross-stack reference errors** in AWS CDK.
 
-### **🔹 `devInstancServiceProps`: EC2 Instance Configuration**
+### **🔹 `devInstanceServiceProps`: EC2 Instance Configuration**
 - An **array of objects**, where each object defines an EC2 instance's parameters.
 - If you need **10 EC2 instances for 10 developers**, you simply add **10 objects** to this array.
 

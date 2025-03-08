@@ -9,7 +9,7 @@ export class DevInstanceEc2Stack extends cdk.Stack {
   constructor(scope: Construct, id: string, props: DevInstanceEc2StackProps) {
     super(scope, id, props);
 
-    props.ec2Instaces.forEach((ec2Instance, index) => {
+    props.ec2Instances.forEach((ec2Instance, index) => {
       // ✅ Deploy Security Group
       const sGConstruct = new SecurityGroupConstruct(
         this,

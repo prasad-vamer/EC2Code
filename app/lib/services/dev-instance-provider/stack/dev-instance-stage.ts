@@ -18,11 +18,11 @@ export class DevInstanceStage extends cdk.Stage {
       }
     );
 
-    // props.ec2Instaces.forEach((ec2Instance, index) => {
+    // props.ec2Instances.forEach((ec2Instance, index) => {
     new DevInstanceEc2Stack(this, `DevInstanceEC2Stack`, {
       vpc: networking.vpc,
       env: props.env,
-      ec2Instaces: props.ec2Instaces,
+      ec2Instances: props.ec2Instances,
     });
     // });
   }

@@ -22,13 +22,13 @@ export class SecurityGroupConstruct extends Construct {
 
     // ✅ Add dynamic ingress rules
     props.ingressRules.forEach((rule) => {
-      const soruce =
+      const source =
         typeof rule.source === "string"
           ? ec2.Peer.ipv4(rule.source)
           : rule.source;
 
       this.securityGroup.addIngressRule(
-        soruce, // Accept source as a parameter
+        source, // Accept source as a parameter
         ec2.Port.tcp(rule.port), // Accept port dynamically
         `Allow access to port ${rule.port} from ${rule.source}`
       );
