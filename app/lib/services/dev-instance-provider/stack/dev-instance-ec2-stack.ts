@@ -12,8 +12,10 @@ export class DevInstanceEc2Stack extends cdk.Stack {
     // ✅ Deploy Security Group
     const sGConstruct = new SecurityGroupConstruct(this, "SecurityStack", {
       vpc: props.vpc,
+      ingressRules: props.ingressRules,
     });
 
+    // ✅ Deploy EC2 Instance
     new Ec2Construct(this, "Ec2Construct", {
       vpc: props.vpc,
       securityGroup: sGConstruct.securityGroup,

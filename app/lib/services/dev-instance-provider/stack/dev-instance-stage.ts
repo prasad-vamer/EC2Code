@@ -19,12 +19,13 @@ export class DevInstanceStage extends cdk.Stage {
     );
 
     new DevInstanceEc2Stack(this, "DevInstanceEC2Stack", {
-      env: props.env,
       vpc: networking.vpc,
+      env: props.env,
       keyPairName: props.keyPairName,
       keyPairPublicKeypath: props.keyPairPublicKeypath,
       ec2InstanceUsername: props.ec2InstanceUsername,
       ec2InstanceType: props.ec2InstanceType,
+      ingressRules: props.ingressRules,
     });
   }
 }

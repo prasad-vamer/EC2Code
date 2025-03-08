@@ -10,13 +10,17 @@ const AppParameters: Record<string, EnvironmentConfig> = {
     },
     // Service based separation for parameters
     devInstancServiceProps: {
-      ec2InstanceUsername: "testInstanceAdmin",
       keyPairName: "testInstnaceAdmin",
       keyPairPublicKeypath: "../tmp/MyEc2Key.pem.pub",
+      ec2InstanceUsername: "testInstanceAdmin",
       ec2InstanceType: ec2.InstanceType.of(
         ec2.InstanceClass.T4G,
         ec2.InstanceSize.NANO
       ),
+      ingressRules: [
+        { port: 22, source: ec2.Peer.anyIpv4() },
+        { port: 443, source: ec2.Peer.anyIpv4() },
+      ],
     },
   },
   dev: {
@@ -27,13 +31,14 @@ const AppParameters: Record<string, EnvironmentConfig> = {
     },
     // Service based separation for parameters
     devInstancServiceProps: {
-      ec2InstanceUsername: "devInstanceAdmin",
       keyPairName: "devInstnaceAdmin",
       keyPairPublicKeypath: "../tmp/MyEc2Key.pem.pub",
+      ec2InstanceUsername: "devInstanceAdmin",
       ec2InstanceType: ec2.InstanceType.of(
         ec2.InstanceClass.R8G,
         ec2.InstanceSize.MEDIUM
       ),
+      ingressRules: [],
     },
   },
 };

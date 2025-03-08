@@ -14,23 +14,25 @@ export class SecurityGroupConstruct extends Construct {
     super(scope, id);
 
     // ✅ Create a Security Group
-    this.securityGroup = new ec2.SecurityGroup(this, "DevSecurityGroup", {
+    this.securityGroup = new ec2.SecurityGroup(this, "SecurityGroup", {
       vpc: props.vpc,
-      description: "Allow SSH and VS Code remote access",
+      description: "Security Group with dynamic ingress rules",
       allowAllOutbound: true,
     });
 
-    // ✅ Allow SSH & VS Code
-    this.securityGroup.addIngressRule(
-      ec2.Peer.anyIpv4(),
-      ec2.Port.tcp(22),
-      "Allow SSH access"
-    );
-    this.securityGroup.addIngressRule(
-      ec2.Peer.anyIpv4(),
-      ec2.Port.tcp(443),
-      "Allow VS Code remote access"
-    );
+    // ✅ Add dynamic ingress rules
+    props.ingressRules.forEach((rule) => {
+      const soruce =
+        typeof rule.source === "string"
+          ? ec2.Peer.ipv4(rule.source)
+          : rule.source;
+
+      this.securityGroup.addIngressRule(
+        soruce, // Accept source as a parameter
+        ec2.Port.tcp(rule.port), // Accept port dynamically
+        `Allow access to port ${rule.port} from ${rule.source}`
+      );
+    });
 
     // ✅ Ensure deletion on `cdk destroy`
     (
