@@ -8,5 +8,5 @@ const envParameters = getAppParameters();
 
 new DevInstanceStage(app, "DevInstanceStage", {
   env: envParameters.env,
-  ec2Instances: envParameters.devInstanceServiceProps,
+  ...envParameters.devInstanceServiceProps,
 });

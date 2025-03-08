@@ -57,10 +57,11 @@ env: {
 - Helps avoid **cross-stack reference errors** in AWS CDK.
 
 ### **🔹 `devInstanceServiceProps`: EC2 Instance Configuration**
-- An **array of objects**, where each object defines an EC2 instance's parameters.
-- If you need **10 EC2 instances for 10 developers**, you simply add **10 objects** to this array.
+- An **object**, where all the properties inside it represent the properties used under the service `devInstanceService` .
 
-### **🔊 Key Parameters in `parameters.ts`**
+### **🔊 Key Parameters in `ec2Instances` under `devInstanceServiceProps`**
+- `ec2Instances`: An **array of objects**, where each object defines an EC2 instance's parameters.
+- If you need **10 EC2 instances for 10 developers**, you simply add **10 objects** to this array.
 
 #### **1️⃣ `keyPairName`**
 - Specifies the **name of the SSH Key Pair** that will be associated with the EC2 instance.
