@@ -119,10 +119,10 @@ This structured parameterization allows teams to **dynamically provision develop
 ## **⚙️ Setup & Deployment**
 
 ### **1️⃣ Clone the Repository**
-[![Clone Repo](https://img.shields.io/badge/Clone-Repository-blue?style=for-the-badge&logo=github)](https://github.com/prasad-vamer)
+[![Clone Repo](https://img.shields.io/badge/Clone-Repository-blue?style=for-the-badge&logo=github)](https://github.com/prasad-vamer/EC2Code.git)
 
 ```sh
-cd <TO_REPOSITORY_FOLDER>
+cd EC2Code
 ```
 
 ### **2️⃣ Configure AWS Credentials in Environment Variables**
