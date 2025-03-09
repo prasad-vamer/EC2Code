@@ -11,3 +11,7 @@ app/node_modules
 # CDK asset staging directory
 app/.cdk.staging
 app/cdk.out
+
+*/*.pem
+tmp
+worknotes
