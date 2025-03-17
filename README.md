@@ -1,7 +1,7 @@
-# 🚀 AWS CDK - Developer EC2 Environment
+# 🚀 EC2Code: - AWS EC2 Environment for software development build using AWS CDK
 
 This repository provisions a **Developer Environment** on **AWS EC2** using **AWS CDK (TypeScript)**. 
-The setup includes a **VPC, Security Group, and an EC2 Instance**, ensuring a secure and scalable development environment.
+The setup includes a **VPC, NetworkACL, Security Group, and an EC2 Instance**, ensuring a secure and scalable development environment.
 
 ## **🌟 Features**
 - ✅ **EC2 Instance**: Pre-configured for development tasks, enabling a remote coding environment.
