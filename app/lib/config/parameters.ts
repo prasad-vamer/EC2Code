@@ -59,7 +59,7 @@ const AppParameters: Record<string, EnvironmentConfig> = {
           ],
         },
       ],
-      whitelistIps: [], // empty whitelist, no NetworkACl will be created
+      whitelistIps: [], // empty whitelist, all ips are allowed by default
     },
   },
 };
