@@ -15,6 +15,7 @@ export class DevInstanceStage extends cdk.Stage {
         // Added env here because If envParameters.env contains a different AWS account or region than DevInstanceNetworkStack,
         // CDK will not allow cross-stack references.
         env: props.env,
+        whitelistIps: props.whitelistIps,
       }
     );
 
