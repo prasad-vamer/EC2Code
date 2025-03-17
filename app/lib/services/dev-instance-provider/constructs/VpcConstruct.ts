@@ -33,6 +33,8 @@ export class VpcConstruct extends Construct {
       subnetType: ec2.SubnetType.PUBLIC,
     }).subnets;
 
+    // Denys all inbound traffic from all sources by default
+    // Denys all outbound traffic to all destinations by default
     const networkACL = new ec2.NetworkAcl(this, "EC2CodeNetworkACL", {
       vpc: this.vpc,
       networkAclName: "EC2CodeNetworkACL",
@@ -41,21 +43,21 @@ export class VpcConstruct extends Construct {
 
     if (props.whitelistIps && props.whitelistIps.length > 0) {
       props.whitelistIps.forEach((ip, index) => {
-        networkACL.addEntry(`AllowSpecificIP${index}`, {
+        networkACL.addEntry(`AllowSpecificIPInBound${index}`, {
           ruleNumber: 100 + index,
           cidr: ec2.AclCidr.ipv4(NetworkUtils.formatToCidr(ip)),
           traffic: ec2.AclTraffic.allTraffic(),
           direction: ec2.TrafficDirection.INGRESS,
           ruleAction: ec2.Action.ALLOW,
         });
-      });
 
-      networkACL.addEntry("DenyAllInbound", {
-        ruleNumber: 200,
-        cidr: ec2.AclCidr.anyIpv4(),
-        traffic: ec2.AclTraffic.allTraffic(),
-        direction: ec2.TrafficDirection.INGRESS,
-        ruleAction: ec2.Action.DENY,
+        networkACL.addEntry(`AllowSpecificIPOutBound${index}`, {
+          ruleNumber: 100,
+          cidr: ec2.AclCidr.ipv4(NetworkUtils.formatToCidr(ip)),
+          traffic: ec2.AclTraffic.allTraffic(),
+          direction: ec2.TrafficDirection.EGRESS,
+          ruleAction: ec2.Action.ALLOW,
+        });
       });
     } else {
       // If no whitelist IPs are provided, allow all inbound traffic
@@ -67,14 +69,6 @@ export class VpcConstruct extends Construct {
         ruleAction: ec2.Action.ALLOW,
       });
     }
-
-    networkACL.addEntry("AllowAllOutbound", {
-      ruleNumber: 100,
-      cidr: ec2.AclCidr.anyIpv4(),
-      traffic: ec2.AclTraffic.allTraffic(),
-      direction: ec2.TrafficDirection.EGRESS,
-      ruleAction: ec2.Action.ALLOW,
-    });
 
     // ✅ Ensure deletion on `cdk destroy`
     (this.vpc.node.defaultChild as cdk.CfnResource).applyRemovalPolicy(
