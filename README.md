@@ -9,6 +9,9 @@ The setup includes a **VPC, NetworkACL, Security Group, and an EC2 Instance**, e
 - ✅ **Security Group**: Controlled inbound and outbound access to allow secure SSH and development tools.
 - ✅ **Scalability**: Supports heavy workloads for software builds, testing, and development.
 - ✅ **Infrastructure as Code**: Easily deploy, modify, and manage using AWS CDK.
+- ✅ **Customizable Access Control (NetworkACL) Support**: for subnets to enhance security.
+  - Allows inbound traffic only from specified IP addresses.
+  - If no whitelist IPs are provided (in the `parameters.ts`), all inbound/outbound traffic is allowed by default.
 
 ## **🚀 Upcoming Features**
 - ✨ **Resource Scheduling**: Start and stop the EC2 instance based on a  developer's schedule.
