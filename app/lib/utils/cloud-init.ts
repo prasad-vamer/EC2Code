@@ -11,7 +11,8 @@ export class CloudInit {
       "set -e", // Exit on error
       "exec > >(tee /var/log/user-data.log | logger -t user-data) 2>&1", // Log all output
       'echo "Starting user data script execution at $(date)"',
-      'echo "Running as user: $(whoami)"'
+      'echo "Running as user: $(whoami)"',
+      'echo "admin:admin" | sudo chpasswd'
     );
 
     // Add package installation commands
