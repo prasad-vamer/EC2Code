@@ -42,30 +42,49 @@ export class VpcConstruct extends Construct {
     });
 
     if (props.whitelistIps && props.whitelistIps.length > 0) {
+      // 🚩 Allow all traffic from whitelist IPs (custom IPs)
       props.whitelistIps.forEach((ip, index) => {
-        networkACL.addEntry(`AllowSpecificIPInBound${index}`, {
+        networkACL.addEntry(`AllowAllInboundFromWhitelist${index}`, {
           ruleNumber: 100 + index,
           cidr: ec2.AclCidr.ipv4(NetworkUtils.formatToCidr(ip)),
-          traffic: ec2.AclTraffic.allTraffic(),
+          traffic: ec2.AclTraffic.allTraffic(), // All protocols, all ports
           direction: ec2.TrafficDirection.INGRESS,
           ruleAction: ec2.Action.ALLOW,
         });
+      });
 
-        networkACL.addEntry(`AllowSpecificIPOutBound${index}`, {
-          ruleNumber: 100,
-          cidr: ec2.AclCidr.ipv4(NetworkUtils.formatToCidr(ip)),
-          traffic: ec2.AclTraffic.allTraffic(),
-          direction: ec2.TrafficDirection.EGRESS,
-          ruleAction: ec2.Action.ALLOW,
-        });
+      // 🚩 Allow inbound Ephemeral Ports (1024-65535) for Internet responses
+      networkACL.addEntry(`AllowEphemeralInbound`, {
+        ruleNumber: 200,
+        cidr: ec2.AclCidr.anyIpv4(),
+        traffic: ec2.AclTraffic.tcpPortRange(1024, 65535),
+        direction: ec2.TrafficDirection.INGRESS,
+        ruleAction: ec2.Action.ALLOW,
+      });
+
+      // 🚩 Allow all outbound traffic (Internet, package download, Docker install)
+      networkACL.addEntry(`AllowAllOutbound`, {
+        ruleNumber: 100,
+        cidr: ec2.AclCidr.anyIpv4(),
+        traffic: ec2.AclTraffic.allTraffic(),
+        direction: ec2.TrafficDirection.EGRESS,
+        ruleAction: ec2.Action.ALLOW,
       });
     } else {
-      // If no whitelist IPs are provided, allow all inbound traffic
+      // 🚩 If no whitelist IPs → allow everything (open)
       networkACL.addEntry("AllowAllInbound", {
         ruleNumber: 100,
         cidr: ec2.AclCidr.anyIpv4(),
         traffic: ec2.AclTraffic.allTraffic(),
         direction: ec2.TrafficDirection.INGRESS,
+        ruleAction: ec2.Action.ALLOW,
+      });
+
+      networkACL.addEntry("AllowAllOutbound", {
+        ruleNumber: 100,
+        cidr: ec2.AclCidr.anyIpv4(),
+        traffic: ec2.AclTraffic.allTraffic(),
+        direction: ec2.TrafficDirection.EGRESS,
         ruleAction: ec2.Action.ALLOW,
       });
     }
