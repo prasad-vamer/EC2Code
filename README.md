@@ -175,7 +175,7 @@ bash ../helper-scripts/fetch-aws-parameter-store-key.sh /ec2/keypair/YOUR_KEY_PA
   - since the public key need to be accessible to the CDK running inside the docker container, you can place the public key in the `tmp` folder and pass the path to keyPairPublicKeyPath.
   - eg: `keyPairPublicKeyPath: '../tmp/your_public_key.pub'`
 
-### **7️⃣ SSH into the EC2 Instance**
+### **7️⃣ x into the EC2 Instance**
 - Retrieve the public IP of the EC2 instance from the AWS Console or the output of the CDK deployment.
 - Retrieve the key pair from the parameter store using the command mentioned above.\
 - Use the key pair to ssh into the EC2 instance:
@@ -213,4 +213,11 @@ aws ec2 describe-instances --query "Reservations[].Instances[].PublicIpAddress"
 
 ```sh
 cdk destroy DevInstanceStage/*
+```
+
+### **🐛 Debugging**
+
+```sh
+sudo cat /var/log/user-data.log | less
+sudo cat /var/log/cloud-init-output.log | less
 ```
