@@ -221,3 +221,12 @@ cdk destroy DevInstanceStage/*
 sudo cat /var/log/user-data.log | less
 sudo cat /var/log/cloud-init-output.log | less
 ```
+
+### **scp files to the ec2 instance**
+```
+scp -i path/to/your-key.pem /path/to/local/file admin@remote-ip:$HOME/
+```
+
+```
+scp -i ACCESS_KEY.pem  -r ./s3-resources/.ssh admin@remote-ip:/home/admin
+```
