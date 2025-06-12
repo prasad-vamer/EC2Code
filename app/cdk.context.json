@@ -1,8 +1,0 @@
-{
-  "availability-zones:account=538737218354:region=ap-south-1": [
-    "ap-south-1a",
-    "ap-south-1b",
-    "ap-south-1c"
-  ],
-  "ami:account=538737218354:filters.image-type.0=machine:filters.name.0=debian-*-arm64-*:filters.state.0=available:owners.0=136693071363:region=ap-south-1": "ami-089a8034b81bd851e"
-}
